@@ -24,7 +24,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// images (we’ll add them soon)
+// 🖼️ Load images
 const background = new Image();
 background.src = "background.png";
 
@@ -37,7 +37,7 @@ veranaNormal.src = "verana.png";
 const veranaBlink = new Image();
 veranaBlink.src = "verana_blink.png";
 
-// blinking
+// 👁️ Blink system
 let isBlinking = false;
 
 function blinkLoop() {
@@ -54,24 +54,36 @@ function blinkLoop() {
   }, delay);
 }
 
-// draw loop
+// 🎮 Draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+  // 🟦 BACKGROUND
+  if (background.complete) {
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+  }
 
-  const veranaImage = isBlinking ? veranaBlink : veranaNormal;
-  const scale = 0.5; // you can change this later
+  // 🧍 VERANA (proper scaling, no squish)
+  if (veranaNormal.complete) {
+    const veranaImage = isBlinking ? veranaBlink : veranaNormal;
 
-const width = veranaImage.width * scale;
-const height = veranaImage.height * scale;
+    const scale = 0.5; // adjust if needed
 
-ctx.drawImage(veranaImage, 300, 200, width, height);
-  ctx.drawImage(shelf, 0, 0, canvas.width, canvas.height);
+    const width = veranaNormal.naturalWidth * scale;
+    const height = veranaNormal.naturalHeight * scale;
+
+    ctx.drawImage(veranaImage, 300, 200, width, height);
+  }
+
+  // 🪵 SHELF (top layer)
+  if (shelf.complete) {
+    ctx.drawImage(shelf, 0, 0, canvas.width, canvas.height);
+  }
 
   requestAnimationFrame(draw);
 }
 
+// Start
 blinkLoop();
 draw();
 </script>
