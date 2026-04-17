@@ -61,8 +61,12 @@ function draw() {
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
   const veranaImage = isBlinking ? veranaBlink : veranaNormal;
-  ctx.drawImage(veranaImage, 300, 200, 400, 400);
+  const scale = 0.5; // you can change this later
 
+const width = veranaImage.width * scale;
+const height = veranaImage.height * scale;
+
+ctx.drawImage(veranaImage, 300, 200, width, height);
   ctx.drawImage(shelf, 0, 0, canvas.width, canvas.height);
 
   requestAnimationFrame(draw);
